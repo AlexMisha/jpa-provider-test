@@ -1,9 +1,5 @@
 # jpa-provider-test
 
-## Serialization 
+## Testing cycle
 
-![](/images/Serialization.png)
-
-## Deserialization 
-
-![](/images/Deserialization.png)
+![](/images/Testing cycle.png)
