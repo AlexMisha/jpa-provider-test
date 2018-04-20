@@ -2,4 +2,4 @@
 
 ## Testing cycle
 
-![](/images/testing_cycle.png)
+![](/images/monitor_jpa_activity.png)
