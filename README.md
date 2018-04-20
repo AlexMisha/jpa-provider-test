@@ -2,4 +2,4 @@
 
 ## Testing cycle
 
-![](/images/Testing cycle.png)
+![](/images/testing_cycle.png)
