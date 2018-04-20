@@ -1,5 +1,5 @@
 # jpa-provider-test
 
-## Testing cycle
+## Monitor JPA Activity
 
 ![](/images/monitor_jpa_activity.png)
