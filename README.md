@@ -1,5 +1,5 @@
 # jpa-provider-test
 
-## Serialization
+## Serialization 
 
-[[/images/Serialization.png]]
+![](/images/Serialization.png)
