@@ -1,0 +1,39 @@
+package com.shepard.jpaprovidertest.driver
+
+import java.sql.Connection
+import java.sql.Driver
+import java.sql.DriverPropertyInfo
+import java.util.*
+import java.util.logging.Logger
+
+fun jdbcDriver(): Driver = JdbcDriver()
+
+class JdbcDriver : Driver {
+    private val logger: Logger = Logger.getLogger(this.javaClass.name)
+
+    override fun getMinorVersion() = 0
+
+    override fun getParentLogger(): Logger = logger
+
+    override fun getPropertyInfo(url: String?, info: Properties?): Array<DriverPropertyInfo> {
+        logger.info("getPropertyInfo url: $url, info: $info")
+        return emptyArray()
+    }
+
+    override fun jdbcCompliant(): Boolean {
+        logger.info("jdbcCompliant")
+        return true
+    }
+
+    override fun acceptsURL(url: String?): Boolean {
+        logger.info("acceptsURL $url")
+        return true
+    }
+
+    override fun connect(url: String?, info: Properties?): Connection {
+        logger.info("connect url: $url, info: $info")
+        return jdbcConnection()
+    }
+
+    override fun getMajorVersion() = 1
+}
