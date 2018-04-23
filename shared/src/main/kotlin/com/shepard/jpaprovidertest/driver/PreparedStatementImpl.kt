@@ -7,10 +7,13 @@ import java.net.URL
 import java.sql.*
 import java.sql.Date
 import java.util.*
+import java.util.logging.Logger
 
 fun preparedStatement(): PreparedStatement = PreparedStatementImpl()
 
 class PreparedStatementImpl : PreparedStatement {
+    private val logger: Logger = Logger.getLogger(this.javaClass.name)
+
     override fun setRef(parameterIndex: Int, x: Ref?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -273,7 +276,7 @@ class PreparedStatementImpl : PreparedStatement {
     }
 
     override fun setString(parameterIndex: Int, x: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        logger.info("setString parameterIndex: $parameterIndex, x: $x")
     }
 
     override fun setAsciiStream(parameterIndex: Int, x: InputStream?, length: Int) {
