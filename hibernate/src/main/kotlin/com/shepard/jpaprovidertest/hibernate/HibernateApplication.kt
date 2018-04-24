@@ -7,7 +7,7 @@ import org.springframework.core.env.Environment
 import java.util.*
 
 @SpringBootApplication(scanBasePackages = ["com.shepard.jpaprovidertest.config",
-    "com.shepard.jpaprovidertest.hibernate.controller"])
+    "com.shepard.jpaprovidertest.hibernate"])
 class HibernateApplication {
     @Bean
     fun properties(environment: Environment) = Properties().apply {
