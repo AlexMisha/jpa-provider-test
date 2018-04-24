@@ -21,6 +21,7 @@
         <spring.version>4.3.9.RELEASE</spring.version>
         <spring.boot.version>2.0.0.RELEASE</spring.boot.version>
         <kotlin.allopen.version>1.2.20</kotlin.allopen.version>
+        <javamelody.version>1.72.0</javamelody.version>
     </properties>
 
     <dependencies>
@@ -75,6 +76,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>${spring.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bull.javamelody</groupId>
+            <artifactId>javamelody-spring-boot-starter</artifactId>
+            <version>${javamelody.version}</version>
         </dependency>
 
         <dependency>
