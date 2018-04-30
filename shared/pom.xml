@@ -22,6 +22,7 @@
         <spring.boot.version>2.0.0.RELEASE</spring.boot.version>
         <kotlin.allopen.version>1.2.20</kotlin.allopen.version>
         <javamelody.version>1.72.0</javamelody.version>
+        <maven.processor.plugin.version>3.3.3</maven.processor.plugin.version>
     </properties>
 
     <dependencies>
@@ -102,7 +103,7 @@
                 <executions>
                     <execution>
                         <id>compile</id>
-                        <phase>process-sources</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
@@ -137,6 +138,7 @@
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
+                <version>${maven.processor.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>process</id>
@@ -163,6 +165,26 @@
                         <version>${hibernate.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

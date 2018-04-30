@@ -11,7 +11,7 @@ import javax.sql.DataSource
 
 @Configuration
 @EntityScan(basePackages = ["com.shepard.jpaprovidertest.entity"])
-@ComponentScan(basePackages = ["com.shepard.jpaprovidertest.controller"])
+@ComponentScan(basePackages = ["com.shepard.jpaprovidertest.controller", "com.shepard.jpaprovidertest.runner"])
 class Configuration {
     @Bean
     fun entityManagerFactory(dataSource: DataSource, properties: Properties) =
