@@ -1,10 +1,10 @@
 # JPA provider monitor
 
-## JPA test lifecicle
+## JPA test lifecycle
 
 ![](/images/monitor_jpa_activity.png)
 
 
 ## Add test infrastructure
 
-## Persistance test results infrastructure
+## Persistence test results infrastructure
