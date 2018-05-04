@@ -18,8 +18,8 @@ class JpaTestRunner : TestRunner {
 
     override fun run() {
         val query = entityManager.criteriaBuilder.query(Account::class.java) {
-            where { root ->
-                like(root[Account_.name], "michael")
+            where {
+                Account_.name like "michael"
             }
         }
         val result = entityManager.createQuery(query).resultList
