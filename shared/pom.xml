@@ -13,7 +13,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.2.40</kotlin.version>
+        <kotlin.version>1.2.41</kotlin.version>
         <junit.version>4.12</junit.version>
         <jpa.version>2.2</jpa.version>
         <lombok.version>1.16.12</lombok.version>
