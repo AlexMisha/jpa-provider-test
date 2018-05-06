@@ -1,5 +1,8 @@
 package com.shepard.jpaprovidertest.driver
 
+import com.shepard.jpaprovidertest.runner.JpaTestRunner
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 import java.io.InputStream
 import java.io.OutputStream
 import java.io.Reader
@@ -22,11 +25,16 @@ fun sqlData(): SQLData = SqlDataImpl()
 fun savepoint(): Savepoint = SavepointImpl()
 fun sqlXml(): SQLXML = SqlXmlImpl()
 
+@Component
 class JdbcConnection : Connection {
+    @Autowired
+    lateinit var jpaTestRunner: JpaTestRunner
+
     private val logger: Logger = Logger.getLogger(this.javaClass.name)
 
     override fun prepareStatement(sql: String?): PreparedStatement {
         logger.info("prepareStatement sql: $sql")
+        logger.info("currentTest: ${jpaTestRunner.currentTest.name}")
         return preparedStatement()
     }
 

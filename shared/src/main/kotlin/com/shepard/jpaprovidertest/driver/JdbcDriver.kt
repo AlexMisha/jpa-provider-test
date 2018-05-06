@@ -1,14 +1,17 @@
 package com.shepard.jpaprovidertest.driver
 
+import org.springframework.beans.factory.getBean
+import org.springframework.context.ApplicationContext
 import java.sql.Connection
 import java.sql.Driver
 import java.sql.DriverPropertyInfo
 import java.util.*
 import java.util.logging.Logger
 
-fun jdbcDriver(): Driver = JdbcDriver()
+fun jdbcDriverOf(applicationContext: ApplicationContext): Driver = JdbcDriver(applicationContext)
 
-class JdbcDriver : Driver {
+class JdbcDriver(private val applicationContext: ApplicationContext) : Driver {
+    private val connection: Connection by lazy { applicationContext.getBean<Connection>() }
     private val logger: Logger = Logger.getLogger(this.javaClass.name)
 
     override fun getMinorVersion() = 0
@@ -32,7 +35,7 @@ class JdbcDriver : Driver {
 
     override fun connect(url: String?, info: Properties?): Connection {
         logger.info("connect url: $url, info: $info")
-        return jdbcConnection()
+        return connection
     }
 
     override fun getMajorVersion() = 1

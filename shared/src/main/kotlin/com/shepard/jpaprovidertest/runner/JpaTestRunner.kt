@@ -1,27 +1,23 @@
 package com.shepard.jpaprovidertest.runner
 
-import com.shepard.jpaprovidertest.criteria.query
-import com.shepard.jpaprovidertest.entity.Account
-import com.shepard.jpaprovidertest.entity.Account_
+import com.shepard.jpaprovidertest.tests.JpaTest
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import javax.persistence.EntityManager
-import javax.persistence.PersistenceContext
 
 interface TestRunner {
+    var currentTest: JpaTest
     fun run()
 }
 
 @Component
 class JpaTestRunner : TestRunner {
-    @PersistenceContext
-    lateinit var entityManager: EntityManager
+    override lateinit var currentTest: JpaTest
 
-    override fun run() {
-        val query = entityManager.criteriaBuilder.query(Account::class.java) {
-            where {
-                Account_.name like "michael"
-            }
-        }
-        val result = entityManager.createQuery(query).resultList
+    @Autowired(required = false)
+    lateinit var tests: List<JpaTest>
+
+    override fun run() = tests.forEach {
+        currentTest = it
+        it.run()
     }
 }
