@@ -1,5 +1,6 @@
 package com.shepard.jpaprovidertest.driver
 
+import com.shepard.jpaprovidertest.tests.JpaTest
 import java.io.InputStream
 import java.io.Reader
 import java.math.BigDecimal
@@ -9,9 +10,9 @@ import java.sql.Date
 import java.util.*
 import java.util.logging.Logger
 
-fun preparedStatement(): PreparedStatement = PreparedStatementImpl()
+fun preparedStatement(currentTest: JpaTest): PreparedStatement = PreparedStatementImpl(currentTest)
 
-class PreparedStatementImpl : PreparedStatement {
+class PreparedStatementImpl(private val currentTest: JpaTest) : PreparedStatement {
     private val logger: Logger = Logger.getLogger(this.javaClass.name)
 
     override fun setRef(parameterIndex: Int, x: Ref?) {
@@ -111,11 +112,13 @@ class PreparedStatementImpl : PreparedStatement {
     }
 
     override fun executeQuery(): ResultSet {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        logger.info("executeQuery")
+        return currentTest.resultSet
     }
 
     override fun executeQuery(sql: String?): ResultSet {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        logger.info("executeQuery, sql: $sql")
+        return currentTest.resultSet
     }
 
     @Suppress("OverridingDeprecatedMember")
@@ -124,12 +127,9 @@ class PreparedStatementImpl : PreparedStatement {
     }
 
     override fun close() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun isClosed(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun isClosed() = false
 
     override fun setNString(parameterIndex: Int, value: String?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -143,9 +143,7 @@ class PreparedStatementImpl : PreparedStatement {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getUpdateCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getUpdateCount() = 100
 
     override fun setRowId(parameterIndex: Int, x: RowId?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -175,9 +173,7 @@ class PreparedStatementImpl : PreparedStatement {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getQueryTimeout(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getQueryTimeout() = 10000
 
     override fun isPoolable(): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -263,9 +259,7 @@ class PreparedStatementImpl : PreparedStatement {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getMaxRows(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getMaxRows() = 100
 
     override fun setSQLXML(parameterIndex: Int, xmlObject: SQLXML?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -316,7 +310,6 @@ class PreparedStatementImpl : PreparedStatement {
     }
 
     override fun setMaxRows(max: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun setTimestamp(parameterIndex: Int, x: Timestamp?) {
@@ -384,7 +377,6 @@ class PreparedStatementImpl : PreparedStatement {
     }
 
     override fun setQueryTimeout(seconds: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun getFetchDirection(): Int {
