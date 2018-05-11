@@ -24,6 +24,7 @@
         <javamelody.version>1.72.0</javamelody.version>
         <maven.processor.plugin.version>3.3.3</maven.processor.plugin.version>
         <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
+        <postgres.version>42.2.1</postgres.version>
     </properties>
 
     <dependencies>
@@ -83,6 +84,11 @@
             <groupId>net.bull.javamelody</groupId>
             <artifactId>javamelody-spring-boot-starter</artifactId>
             <version>${javamelody.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgres.version}</version>
         </dependency>
 
         <dependency>
