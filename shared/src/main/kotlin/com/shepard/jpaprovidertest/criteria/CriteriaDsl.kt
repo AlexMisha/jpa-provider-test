@@ -1,9 +1,6 @@
 package com.shepard.jpaprovidertest.criteria
 
-import javax.persistence.criteria.CriteriaBuilder
-import javax.persistence.criteria.CriteriaQuery
-import javax.persistence.criteria.Predicate
-import javax.persistence.criteria.Root
+import javax.persistence.criteria.*
 import javax.persistence.metamodel.SingularAttribute
 
 class Query<T>(
@@ -32,6 +29,30 @@ class WhereClause<T>(
     infix fun Predicate.and(predicate: Predicate): Predicate = and(this, predicate)
 
     infix fun Predicate.or(predicate: Predicate): Predicate = or(this, predicate)
+
+    infix fun <X : Comparable<X>> SingularAttribute<T, X>.greaterThan(expression: Expression<X>): Predicate =
+            greaterThan(root[this], expression)
+
+    infix fun <X : Comparable<X>> SingularAttribute<T, X>.greaterThan(parameter: X): Predicate =
+            greaterThan(root[this], parameter)
+
+    infix fun <X : Comparable<X>> SingularAttribute<T, X>.greaterThanOrEqualTo(expression: Expression<X>): Predicate =
+            greaterThanOrEqualTo(root[this], expression)
+
+    infix fun <X : Comparable<X>> SingularAttribute<T, X>.greaterThanOrEqualTo(parameter: X): Predicate =
+            greaterThanOrEqualTo(root[this], parameter)
+
+    infix fun <X : Comparable<X>> SingularAttribute<T, X>.lessThan(expression: Expression<X>): Predicate =
+            lessThan(root[this], expression)
+
+    infix fun <X : Comparable<X>> SingularAttribute<T, X>.lessThan(parameter: X): Predicate =
+            lessThan(root[this], parameter)
+
+    infix fun <X : Comparable<X>> SingularAttribute<T, X>.lessThanOrEqualTo(expression: Expression<X>): Predicate =
+            lessThanOrEqualTo(root[this], expression)
+
+    infix fun <X : Comparable<X>> SingularAttribute<T, X>.lessThanOrEqualTo(parameter: X): Predicate =
+            lessThanOrEqualTo(root[this], parameter)
 }
 
 fun <T> CriteriaBuilder.query(clazz: Class<T>, continuation: Query<T>.() -> Unit): CriteriaQuery<T> =

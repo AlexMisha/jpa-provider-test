@@ -33,7 +33,7 @@ class AccountTest : JpaTest {
     override fun run() {
         val query = entityManager.criteriaBuilder.query(Account::class.java) {
             where {
-                criteriaBuilder.greaterThan(root[Account_.id], 0L)
+                (Account_.id greaterThan 0L) and (Account_.id lessThan 10L)
             }
         }
         val result = entityManager.createQuery(query).resultList
