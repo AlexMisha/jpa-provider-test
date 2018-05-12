@@ -92,7 +92,6 @@ class PreparedStatementImpl(private val currentTest: JpaTest) : PreparedStatemen
     }
 
     override fun setLong(parameterIndex: Int, x: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun setClob(parameterIndex: Int, x: Clob?) {

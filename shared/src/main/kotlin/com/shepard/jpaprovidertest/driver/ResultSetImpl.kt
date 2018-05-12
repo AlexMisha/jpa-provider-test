@@ -4,51 +4,60 @@ import com.sun.rowset.CachedRowSetImpl
 import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 import java.sql.Types
+import java.util.logging.Logger
 import javax.sql.rowset.RowSetMetaDataImpl
 
-fun resultSetOf(type: Class<*>, values: Map<String, Any>, types: List<Int>): ResultSet =
-        ResultSetImpl(type).apply {
-            indexedValues.putAll(values)
-            metadata = ResultSetMetaDataImpl(types, RowSetMetaDataImpl())
-        }
+fun <T> resultSetOf(values: List<T>, types: List<Int>): ResultSet = ResultSetImpl(values).apply {
+    metadata = ResultSetMetaDataImpl(types, RowSetMetaDataImpl())
+}
 
-class ResultSetImpl(private val type: Class<*>) : CachedRowSetImpl() {
-    val indexedValues: MutableMap<String, Any> = mutableMapOf()
-    lateinit var metadata: ResultSetMetaData
+class ResultSetImpl<T>(private val values: List<T>) : CachedRowSetImpl() {
+    lateinit var metadata: ResultSetMetaDataImpl
+
+    private val fieldCount by lazy { values.size * metadata.types.size }
+    private var currentField = 0
+
+    val logger: Logger = Logger.getLogger(javaClass.name)
 
     override fun getMetaData(): ResultSetMetaData = metadata
 
-    override fun next() = indexedValues.isNotEmpty()
+    override fun next() = currentField < fieldCount
 
-    override fun getString(key: String?) = indexedValues.getAndRemoveByJdbcKey(key) as String
+    override fun getString(key: String?): String = values[currentField++ / metadata.types.size] fieldValueBy key
 
-    override fun getBoolean(key: String?) = indexedValues.getAndRemoveByJdbcKey(key) as Boolean
+    override fun getBoolean(key: String?): Boolean = values[currentField++ / metadata.types.size] fieldValueBy key
 
-    override fun getInt(key: String?) = indexedValues.getAndRemoveByJdbcKey(key) as Int
+    override fun getInt(key: String?): Int = values[currentField++ / metadata.types.size] fieldValueBy key
 
-    override fun getLong(key: String?) = indexedValues.getAndRemoveByJdbcKey(key) as Long
+    override fun getLong(key: String?): Long = values[currentField++ / metadata.types.size] fieldValueBy key
 
-    override fun getString(index: Int) = getString(type fieldNameBy index)
+    override fun getString(index: Int): String = values[currentField++ / metadata.types.size] fieldValueBy index
 
-    override fun getLong(index: Int) = getLong(type fieldNameBy index)
+    override fun getLong(index: Int): Long = values[currentField++ / metadata.types.size] fieldValueBy index
 
-    override fun getBoolean(index: Int) = getBoolean(type fieldNameBy index)
+    override fun getBoolean(index: Int): Boolean = values[currentField++ / metadata.types.size] fieldValueBy index
 
-    override fun getInt(index: Int) = getInt(type fieldNameBy index)
+    override fun getInt(index: Int): Int = values[currentField++ / metadata.types.size] fieldValueBy index
 }
 
-fun <V> MutableMap<String, V>.getAndRemoveByJdbcKey(key: String?): V? {
-    @Suppress("NAME_SHADOWING")
-    val key = requireNotNull(key)
-    val (resultKey, result) = asSequence().filter { it.key in key }.single()
-    remove(resultKey)
-    return result
+@Suppress("UNCHECKED_CAST")
+infix fun <V> Any?.fieldValueBy(name: String?): V {
+    val field = requireNotNull(this)
+            .javaClass
+            .declaredFields
+            .single { it.name in requireNotNull(name) }
+            .apply { isAccessible = true }
+    return field[this] as V
 }
 
-infix fun Class<*>.fieldNameBy(index: Int): String = declaredFields[index - 1].name
+@Suppress("UNCHECKED_CAST")
+infix fun <V> Any?.fieldValueBy(index: Int): V {
+    val field = requireNotNull(this).javaClass.declaredFields[index - 1].apply { isAccessible = true }
+    return field[this] as V
+}
 
 class ResultSetMetaDataImpl(
-        private val types: List<Int>,
+        val types: List<Int>,
         resultSetMetaData: ResultSetMetaData
 ) : ResultSetMetaData by resultSetMetaData {
     override fun getColumnCount() = types.size

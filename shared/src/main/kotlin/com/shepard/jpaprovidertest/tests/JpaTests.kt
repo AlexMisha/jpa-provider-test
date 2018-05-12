@@ -21,8 +21,7 @@ interface JpaTest {
 class AccountTest : JpaTest {
     override val name: String = javaClass.simpleName
     override val resultSet = resultSetOf(
-            Account::class.java,
-            mapOf("id" to 1L, "name" to "michael"),
+            listOf(Account(1L, "michael"), Account(2L, "john")),
             listOf(Types.BIGINT, Types.VARCHAR)
     )
 
@@ -34,10 +33,10 @@ class AccountTest : JpaTest {
     override fun run() {
         val query = entityManager.criteriaBuilder.query(Account::class.java) {
             where {
-                Account_.name like "michael"
+                criteriaBuilder.greaterThan(root[Account_.id], 0L)
             }
         }
-        val result = entityManager.createQuery(query).singleResult
+        val result = entityManager.createQuery(query).resultList
         logger.info("result: $result")
     }
 }

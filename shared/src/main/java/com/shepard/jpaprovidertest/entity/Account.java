@@ -5,10 +5,17 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@SuppressWarnings("WeakerAccess")
 @Entity
 @Table(name = "account")
 public class Account {
+
+    public Account() {
+    }
+
+    public Account(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     @Getter
     @Setter
