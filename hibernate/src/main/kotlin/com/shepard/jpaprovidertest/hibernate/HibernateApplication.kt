@@ -1,5 +1,6 @@
 package com.shepard.jpaprovidertest.hibernate
 
+import com.shepard.jpaprovidertest.driver.ProviderType
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
@@ -17,6 +18,9 @@ class HibernateApplication {
         setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false")
         setProperty("hibernate.statement_cache.size", "0")
     }
+
+    @Bean
+    fun providerType() = ProviderType.HIBERNATE
 }
 
 fun main(args: Array<String>) {

@@ -111,12 +111,12 @@ class PreparedStatementImpl(private val currentTest: JpaTest) : PreparedStatemen
     }
 
     override fun executeQuery(): ResultSet {
-        logger.info("executeQuery")
+        logger.info("executeQuery, currentTest.resultSet: ${currentTest.resultSet}")
         return currentTest.resultSet
     }
 
     override fun executeQuery(sql: String?): ResultSet {
-        logger.info("executeQuery, sql: $sql")
+        logger.info("executeQuery, sql: $sql, currentTest.resultSet: ${currentTest.resultSet}")
         return currentTest.resultSet
     }
 
