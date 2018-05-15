@@ -90,35 +90,14 @@ class PasswordHolderTest : JpaTest {
     override val name: String = javaClass.name
     override val resultSet by lazy {
         resultSetOf(
-                listOf(PasswordHolder(1L, listOf(
-                        Password(1L, "asdasdssd", Account(1L, "michael")),
-                        Password(2L, "asdcfsdfassd", Account(2L, "john"))))),
+                listOf(AccountHolder(1L, listOf(Account(1L, "michael"), Account(2L, "john")))),
                 listOf(Types.BIGINT, Types.REF),
                 providerType,
                 innerResultSets = listOf(
                         resultSetOf(
-                                listOf(Password(1L, "asdasdssd", Account(1L, "michael"))),
-                                listOf(Types.BIGINT, Types.VARCHAR, Types.REF),
-                                providerType,
-                                innerResultSets = listOf(
-                                        resultSetOf(
-                                                listOf(Account(1L, "michael")),
-                                                listOf(Types.BIGINT, Types.VARCHAR),
-                                                providerType
-                                        )
-                                )
-                        ),
-                        resultSetOf(
-                                listOf(Password(2L, "asdcfsdfassd", Account(2L, "john"))),
-                                listOf(Types.BIGINT, Types.VARCHAR, Types.REF),
-                                providerType,
-                                innerResultSets = listOf(
-                                        resultSetOf(
-                                                listOf(Account(2L, "john")),
-                                                listOf(Types.BIGINT, Types.VARCHAR),
-                                                providerType
-                                        )
-                                )
+                                listOf(Account(1L, "michael"), Account(2L, "john")),
+                                listOf(Types.BIGINT, Types.VARCHAR),
+                                providerType
                         )
                 )
         )
@@ -133,9 +112,9 @@ class PasswordHolderTest : JpaTest {
     lateinit var entityManager: EntityManager
 
     override fun run() {
-        val query = entityManager.criteriaBuilder.query(PasswordHolder::class.java) {
+        val query = entityManager.criteriaBuilder.query(AccountHolder::class.java) {
             where {
-                PasswordHolder_.id greaterThan 0L
+                AccountHolder_.id greaterThan 0L
             }
         }
         val result = entityManager.createQuery(query).resultList

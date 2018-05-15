@@ -7,15 +7,15 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "password_holder")
-public class PasswordHolder {
+@Table(name = "account_holder")
+public class AccountHolder {
 
-    public PasswordHolder() {
+    public AccountHolder() {
     }
 
-    public PasswordHolder(Long id, List<Password> passwords) {
+    public AccountHolder(Long id, List<Account> accounts) {
         this.id = id;
-        this.passwords = passwords;
+        this.accounts = accounts;
     }
 
     @Getter
@@ -26,14 +26,14 @@ public class PasswordHolder {
 
     @Getter
     @Setter
-    @OneToMany(targetEntity = Password.class, fetch = FetchType.EAGER)
-    private List<Password> passwords;
+    @OneToMany(targetEntity = Account.class, fetch = FetchType.EAGER)
+    private List<Account> accounts;
 
     @Override
     public String toString() {
-        return "PasswordHolder{" +
+        return "AccountHolder{" +
                 "id=" + id +
-                ", passwords=" + passwords +
+                ", accounts=" + accounts +
                 '}';
     }
 }
