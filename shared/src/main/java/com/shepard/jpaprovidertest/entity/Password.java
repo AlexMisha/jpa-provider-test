@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "password")
+@Cacheable(false)
 public class Password {
 
     public Password() {

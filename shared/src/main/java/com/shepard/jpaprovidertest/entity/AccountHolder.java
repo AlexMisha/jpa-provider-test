@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "account_holder")
+@Cacheable(false)
 public class AccountHolder {
 
     public AccountHolder() {

@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "account")
+@Cacheable(false)
 public class Account {
 
     public Account() {
